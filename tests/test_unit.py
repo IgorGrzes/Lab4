@@ -1,7 +1,11 @@
 import pytest
-
+import json
 from pydantic import ValidationError
 from src.models import Apartment
+from src.models import Tenant
+
+
+
 
 
 def test_apartment_fields():
@@ -20,6 +24,41 @@ def test_apartment_fields():
     assert data.location == "Test Location"
     assert data.area_m2 == 50.0
     assert len(data.rooms) == 2
+
+
+
+
+def test_tenant_fields_direct():
+    # 1. Bezpośrednie tworzenie obiektu (wszystkie 7 pól)
+    tenant = Tenant(
+        name="Adam Nowak",
+        apartment="apart-test",
+        room="room-1",
+        rent_pln=1500.0,
+        deposit_pln=2000.0,
+        date_agreement_from="2024-01-01",
+        date_agreement_to="2024-12-31"
+    )
+
+    assert tenant.name == "Adam Nowak"                    # 1
+    assert tenant.apartment == "apart-test"               # 2
+    assert tenant.room == "room-1"                        # 3
+    assert tenant.rent_pln == 1500.0                      # 4
+    assert tenant.deposit_pln == 2000.0                   # 5
+    assert tenant.date_agreement_from == "2024-01-01"     # 6
+    assert tenant.date_agreement_to == "2024-12-31"       # 7
+
+def test_tenant_validation_error():
+    with pytest.raises(ValidationError):
+        Tenant(
+            name="Adam Nowak",
+            apartment="apart-test",
+            room="room-1",
+            rent_pln="to nie jest liczba", 
+            deposit_pln=2000.0,
+            date_agreement_from="2024-01-01",
+            date_agreement_to="2024-12-31"
+        )
 
 
 def test_apartment_from_dict():

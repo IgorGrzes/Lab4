@@ -25,5 +25,15 @@
         "deposit_pln": 2800.0,
         "date_agreement_from": "2024-01-01",
         "date_agreement_to": "2024-12-31"
+    },
+
+    "tenant-test": {
+        "name": "test",
+        "apartment": "test",
+        "room": "test",
+        "rent_pln": 0.0,
+        "deposit_pln": 0.0,
+        "date_agreement_from": "test liczba",
+        "date_agreement_to": "test liczba"
     }
 }
